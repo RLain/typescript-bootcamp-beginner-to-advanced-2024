@@ -11,4 +11,4 @@ printCourseName(name2)
 printCourseName(100) //TS2345: Argument of type number is not assignable to parameter of type string
 printCourseName([0,1,2] //TS2345: Argument of type number[] is not assignable to parameter of type string
 
-// 💡To run this file simply cd into the dir and run $ node 01-why-typescript.js
+// 💡To run this file ...
