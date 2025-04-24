@@ -1,7 +1,7 @@
 const name = "Typescript Bootcamp"
 
 function printCourseName(name){
-    console.log("The course name is" + name.toUpperCase())
+    console.log("The course name is " + name.toUpperCase())
 }
 
 printCourseName(name)
