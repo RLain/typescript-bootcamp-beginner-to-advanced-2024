@@ -22,4 +22,65 @@ As a general rule use `const` for the majority of variables, and update to `let`
 
 ## Understanding Type Inference - the most powerful feature of Typescript
 
-Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/31425314#overview
+When writing typescript we have two primary options. We can explicitly annotate the type such as in the following 
+stating the value will be a string:
+
+```ts
+const title: string = "Typescript Bootcamp"
+```
+
+The following is an example of how the compiler can _infer_ the type based on the value. On a .ts file, the 
+title will show it has been interpreted as a `string` value.
+
+```ts
+const title = "Typescript Bootcamp"
+```
+
+## When to use Type Annotations and why
+
+As a general rule, it is recommended to _not_ annotate everything as this bulks out the codebase unnecessarily. If
+the value is very clear and the annotation is redundant, don't add.
+
+However, there are scenarios where annotations cannot be avoided. In the following example, none of the values are known
+meaning they default to `any`. 
+
+```ts
+function printCourse(title, subtitle, lessonsCount){
+    let fullTitle = title + subtitle
+
+    // Because no types are known and the infered type is 'any' this function will allow us to reassign the value to a number....
+    fullTitle = 10;
+}
+```
+
+## Typescript Static Type System vs Javascript Dynamic Type System
+
+Javascript allows the variable assignment type to change at runtime. This is because there is no type safety in Javascript.
+
+This means the printCourse example above, when executed (and with a return or console statement) will return 10 for fullTitle.
+
+This means Javascript is considered a `Dynamic type system`. This can be unintuitive if you come from a static typed background.
+Javascript provides a special keyword `typeof` that can be used to determine the type e.g.
+
+```js
+let title = "Typescript Bootcamp"
+
+console.log('Type before:', typeof title)
+
+title = 10
+
+console.log('Type aftere:', typeof title)
+
+//This will log
+Type before: string
+Type aftere: number
+```
+
+Dynamically typed systems can be hard to debug...which is why it is recommended to use statically typed systems ergo Typescript.
+
+
+## Primitive Types - Objects
+
+Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/31638638#questions/19036486
+
+

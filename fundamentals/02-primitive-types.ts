@@ -28,4 +28,12 @@ if(published){
     console.log('The course is published:', title);
 }
 
+
+function printCourse(title, subtitle, lessonsCount){
+    let fullTitle = title + subtitle
+
+    // Because no types are known and the infered type is 'any' this function will allow us to reassign the value to a number....
+    fullTitle = 10;
+}
+
 // To run $ tsc --watch 02-primitive-types.ts and in a separate terminal $ node 02-primitive-types.ts

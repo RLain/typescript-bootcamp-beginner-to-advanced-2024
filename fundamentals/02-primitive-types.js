@@ -18,4 +18,13 @@ var published = true;
 if (published) {
     console.log('The course is published:', title);
 }
+
+
+let title2 = "Typescript Bootcamp"
+
+console.log('Type before:', typeof title2)
+
+title2 = 10
+
+console.log('Type aftere:', typeof title2)
 // To run $ tsc --watch 02-primitive-types.ts and in a separate terminal $ node 02-primitive-types.ts
