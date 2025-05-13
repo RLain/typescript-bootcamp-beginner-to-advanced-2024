@@ -1,3 +1,4 @@
+// To run $ tsc --watch 02-primitive-types.ts and in a separate terminal $ node 02-primitive-types.ts
 // Primitive types: number
 var lessonsCount = 10;
 var total = lessonsCount + 10;
@@ -18,13 +19,16 @@ var published = true;
 if (published) {
     console.log('The course is published:', title);
 }
-
-
-let title2 = "Typescript Bootcamp"
-
-console.log('Type before:', typeof title2)
-
-title2 = 10
-
-console.log('Type aftere:', typeof title2)
-// To run $ tsc --watch 02-primitive-types.ts and in a separate terminal $ node 02-primitive-types.ts
+function printCourse(title, subtitle, lessonsCount) {
+    var fullTitle = title + subtitle;
+    // Because no types are known and the infered type is 'any' this function will allow us to reassign the value to a number....
+    fullTitle = 10;
+}
+// Primitive types: Objects
+var course = {
+    title: "Typescript Bootcamp",
+    subtitle: "Learn the language fundamentals",
+    lessonsCount: 10
+};
+// course.fullTitle = ""; // This will complain as this property does not exist on the object
+console.log('type of course: ', typeof course);

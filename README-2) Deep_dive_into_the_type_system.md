@@ -81,6 +81,140 @@ Dynamically typed systems can be hard to debug...which is why it is recommended 
 
 ## Primitive Types - Objects
 
-Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/31638638#questions/19036486
+All properties inside an object will have either explicit or inferred types.
+
+In general, when defining objects in your application there is no need to type them as an object. There is also
+no need to define types explictly inline such as in course 2 below.
+
+```ts
+const course = {
+    title: "Typescript Bootcamp",
+    subtitle: "Learn the language fundamentals",
+    lessonsCount: 10
+}
+
+//vs explicit typing
+
+const course2 : {
+    title: string;
+    subtitle: string;
+    lessonsCount: number;
+} = {
+    title: "Typescript Bootcamp",
+    subtitle: "Learn the language fundamentals",
+    lessonsCount: 10
+}
+```
+
+Here is an example of nested objects, but remember we generally don't need to define the types inline as done here:
+
+```ts
+const course : {
+    title: string;
+    subtitle: string;
+    lessonsCount: number;
+    author: {
+        firstName: string;
+        lastName: string;
+    }
+ = {
+    title: "Typescript Bootcamp",
+    subtitle: "Learn the language fundamentals",
+    lessonsCount: 10,
+    author: {
+        firstName: "John",
+        lastName: "Doe"
+    }
+}
+```
+
+## Null vs undefined
+
+📁Related files:
+/fundamentals/03-null-undefined-chaining.ts
+
+The following will return a type of `undefined`. This means the variable has *not yet been initialised*. The variable
+has been declared in the program but no value has been assigned to it yet.
+
+```ts
+let title:string;
+
+console.log('type of title; ', typeof title);
+```
+
+In the above example, if this existed in the codebase this would be a _mistake_. So undefined helps identify that there is a missing
+value. 
+
+If we then add conditional logic to the file, we can see that `undefined is equal to falsy`.
+
+```ts
+if (!title) {
+    console.log('no title');
+}
+```
+
+There is a separate reality that can occur, `optional values`.  
+
+If we _explicitly_ define the value as null, there are two important things:
+
+1) The typeof is now an `object`
+2) The conditional logic still interprets `null as equal to falsy`.
+
+```ts
+let title2: string =  null
+
+console.log('type of title2; ', typeof title2);
+
+if (!title2) {
+    console.log('no title (null)');
+}
+
+/* Which logs out
+❯ node 03-null-undefined-chaining.js
+type of title;  undefined
+no title (undefined)
+type of title2;  object
+no title (null)*/
+```
+
+ℹ️ *Important*: Critical distinction here is the `null` is intentional and used to inform us and the codebase
+that this intentionally does not have a value. `undefined` is _generally_....an accident/mistake. 
+
+Other languages handle this differently, for example in Java it only uses null. So in the first case where Javascript
+would return undefined, Java would return null in the runtime. Only in Javascript has this difference between undefined and
+null been created for historical reasons. There is no real benefit to a developer to have this distinction and it can/does
+cause confusion. The support of undefined is only in for backwards compatibility. 
+
+Principles:
+- If you have an optional variable in your program, and you know that the variable won't have a value, assign it the value of null
+- Don't define the value as "undefined" ergo let title:string = undefined, this is confusing
+- Use the truthy/falsy test in condition logic (see below note to self)
+- Null is more familiar to a larger number of developers. Use null and don't use undefined explictly anywhere.
+
+💡*Note to self*: When doing conditional logic you do not need to write out if(thingChecking === undefined){}, this can
+be simplified to if(!thisChecking){} due to the falsy nature. 
+
+## Optional chaining - how to avoid Null related errors
+
+See 03-null-undefined-chaining.ts -> //optional chaining on how to avoid `TypeError: Cannot read properties of null (reading 'title')`
+
+The core learning from this lecture is optional chaining is simpler than writing short-circuit programming ergo:
+
+```ts
+//Do this
+if(course?.title){}
+
+//Not this
+if(course && course.title){}
+```
+
+What is curious, is that when using the optional chaining operator, if the nested path is not provided then the output becomes `undefined`
+
+```ts
+let course2 = null
+console.log(course2?.title) // This becomes undefined as the deeper path of title is undefined.
+```
+
+Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/32029400#questions
 
 

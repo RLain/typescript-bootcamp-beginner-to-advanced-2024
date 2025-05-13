@@ -1,3 +1,5 @@
+// To run $ tsc --watch 02-primitive-types.ts and in a separate terminal $ node 02-primitive-types.ts
+
 // Primitive types: number
 const lessonsCount = 10;
 
@@ -36,4 +38,26 @@ function printCourse(title, subtitle, lessonsCount){
     fullTitle = 10;
 }
 
-// To run $ tsc --watch 02-primitive-types.ts and in a separate terminal $ node 02-primitive-types.ts
+// Primitive types: Objects
+const course : {
+    title: string;
+    subtitle: string;
+    lessonsCount: number;
+    author: {
+        firstName: string;
+        lastName: string;
+    }
+} = {
+    title: "Typescript Bootcamp",
+    subtitle: "Learn the language fundamentals",
+    lessonsCount: 10,
+    author: {
+        firstName: "John",
+        lastName: "Doe"
+    }
+}
+
+// course.fullTitle = ""; // This will complain as this property does not exist on the object
+
+console.log('type of course: ', typeof course)
+
