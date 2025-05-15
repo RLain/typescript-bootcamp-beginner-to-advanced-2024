@@ -52,4 +52,49 @@ if (course2?.title) {
     console.log(`Title (optional chaining): ${course2.title}`);
 }
 
+// null coalescing operator
+
+console.log('null coalescing operator_____________')
+
+let course3 = null
+const title3 = course3?.textfields.title ?? "No title found" // If the path is undefined then the string is returned
+
+// Note there are edge cases where using the OR operator would behave in an unexpected way, which is why we want to use ??
+// 🙅‍♀️const title3 = course3?.textfields.title || "No title found"
+
+// let course4 = {
+//     textFields: {
+//         title: "Typescript Bootcamp",
+//     }
+// }
+
+let course4 = null
+
+// ✅ Good practise: Check if the field exists and add appropriate error handling
+function logCourseTitle(course) {
+    if (!course4?.textFields) {
+        console.error('textFields not defined')
+        return
+    }
+
+
+    // Note optional chaining is not necessary here due to the above check and would be redundant.
+    if (course4.textFields.title) {
+        console.log(`Title logCourseTitle: ${course4.textFields?.title}`);
+    }
+}
+
+logCourseTitle(course4)
+
+// 🙅‍♀️Not recommended: Rely solely on optional chaining as this simply returns nothing....
+function logCourseTitle2(course) {
+    if (course4?.textFields?.title) {
+        console.log(`Title logCourseTitle: ${course4.textFields?.title}`);
+    }
+}
+
+logCourseTitle2(course4)
+
+
+
 

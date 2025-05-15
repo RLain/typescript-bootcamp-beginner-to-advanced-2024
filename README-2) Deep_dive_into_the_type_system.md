@@ -215,6 +215,89 @@ let course2 = null
 console.log(course2?.title) // This becomes undefined as the deeper path of title is undefined.
 ```
 
+## Optional chaining - when to use it or not
+
+✅ Good practise: Check if the field exists and add appropriate error handling
+```ts
+function logCourseTitle(course) {
+    if (!course4?.textFields) {
+        console.error('textFields not defined')
+        return
+    }
+    
+    // Note optional chaining is not necessary here due to the above check and would be redundant.
+    if (course4.textFields.title) {
+        console.log(`Title logCourseTitle: ${course4.textFields?.title}`);
+    }
+}
+```
+
+🙅‍♀️Not recommended: Rely solely on optional chaining as this simply returns nothing....
+
+```ts
+function logCourseTitle2(course) {
+    if (course4?.textFields?.title) {
+        console.log(`Title logCourseTitle: ${course4.textFields?.title}`);
+    }
+}
+```
+
+## The Null Coalescing operator
+
+The null coalescing operator, often represented as ??, is a binary operator that returns the left-hand operand 
+if it's not null or undefined, otherwise it evaluates and returns the right-hand operand. 
+It's a way to provide a default value when a variable might be null or undefined, simplifying conditional 
+assignments and avoiding null reference exceptions.
+
+
+## Primitive Types: Arrays
+
+📁Related files:
+/fundamentals/04-arrays-enums.ts
+
+Arrays are type safe:
+
+```ts
+const numbers = [1,2,3,4]
+
+numbers.push(4) // Allowed via Type inference
+numbers.push("Trying to add a string") // This throws an error: TS2345: Argument of type string is not assignable to parameter of type number
+```
+
+## Typescript enums
+
+See 04-arrays-enums.ts for examples on plain number enums vs string enums.
+
+📚Additional reading: (TypeScript Enums or Union Types: Which One Should You Use?)[https://medium.com/@sanyagubrani/typescript-enums-or-union-types-which-one-should-you-use-377ecae947af]
+
+This linked page above explains some great considerations when choosing enums vs union types
+```ts
+//Enums are a way of defining a set of named constants
+export enum Status {
+  Successful = 'successful',
+  Failed = 'failed',
+  Skipped = 'skipped',
+}
+
+//Union Types are another way to represent a fixed set of values
+export type Status = 'successful' | 'failed' | 'skipped';
+```
+
+Use enums when:
+- You need a set of related constants (like days of the week or HTTP status codes)
+- You want to take advantage of enum-specific features (like reverse mapping)
+- You’re working on a project where the slight increase in code size doesn’t matter 
+    - Enums get compiled into JavaScript objects. This means that for every enum, there’s a bit of extra code generated
+    - This extra code can slightly increase the size of your final bundle. For small projects, this isn’t a big deal. But for larger projects, especially web apps where every byte counts, it might make you think twice.
+- Enums can make refactoring easier by updating all references in one place.
+
+Use union types when:
+- You’re working with simple string (or number) options
+- You’re dealing with APIs or JSON data
+- You want to keep your compiled JavaScript as lean as possible
+- Union types are more JavaScript-like and reduce bundle size.
+
+
 Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/32029400#questions
 
 
