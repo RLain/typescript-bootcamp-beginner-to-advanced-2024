@@ -297,7 +297,75 @@ Use union types when:
 - You want to keep your compiled JavaScript as lean as possible
 - Union types are more JavaScript-like and reduce bundle size.
 
+## The Any type and why we should avoid it
 
-Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/32029400#questions
+📁Related files:
+/fundamentals/05-any-type.ts
+
+- If the Typescript compiler is unable to identify what the type should be, it will infer it as `any`
+- We can also explicitly assign the type `any`
+
+We can see in the following that the `any` type literally allows the value to be anything...including null, undefined, objects, arrays etc.
+
+```ts
+let lessonsCount:any = 10;
+
+lessonsCount = "Now a string"
+
+lessonsCount = true
+
+let numbers : any[] = [10, 20, "Hello", true] //Whan even is this!
+```
+
+This means the `any` type kind of "bypasses" the type system (in double quotes because any itself is a type). It removes all the value of using Typescript.
+
+### How to avoid implicit any types with the noImplicitAny Compiler flag
+
+The following will infer the property types as `any` ergo title: any, lessonsCount: any
+
+```ts
+function printCourse(title, lessonsCounts){
+    console.log(title, lessonsCounts)
+}
+```
+
+This is a problem because if a developer accidentally switches the inputs ergo printCourse(10, "Course name") the compiler
+will *not* flag any issues!
+
+We can test this quickly using the compiler in our terminal $ tsc --noImplicitAny 05-any-type.ts
+
+And then formally add to the `tsconfig.json` file inside the `compilerOptions` object. See docs (here)[https://www.typescriptlang.org/tsconfig/#noImplicitAny].
+
+Key takeaways:
+- Avoid using `any` in your program period
+- Enable the `noImplicitAny` compilerOption on your tsconfig.json file
+
+
+## Union types
+
+📁Related files:
+/fundamentals/06-union-type.ts
+
+```ts
+let uniqueIdentifier: number | string = 1000 // Union type - but a contrived example
+
+uniqueIdentifier = "201ef72bb-49e3-40ef-8331-sdflskfjw8r324"
+
+const keys: (number | string)[] = [] // Union type - but a contrived example
+```
+
+In general:
+- Using union types to define two very different types e.g. number | string is discouraged
+- It would rather be used to define something like number | null, or string | null
+
+```ts
+let courseId : number | null = null // Union type - more common reality
+```
+
+
+## Non null assertion operator
+
+
+Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/33047684#questions
 
 
