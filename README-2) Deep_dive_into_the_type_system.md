@@ -268,7 +268,7 @@ numbers.push("Trying to add a string") // This throws an error: TS2345: Argument
 
 See 04-arrays-enums.ts for examples on plain number enums vs string enums.
 
-📚Additional reading: (TypeScript Enums or Union Types: Which One Should You Use?)[https://medium.com/@sanyagubrani/typescript-enums-or-union-types-which-one-should-you-use-377ecae947af]
+📚Additional reading: [TypeScript Enums or Union Types: Which One Should You Use?](https://medium.com/@sanyagubrani/typescript-enums-or-union-types-which-one-should-you-use-377ecae947af)
 
 This linked page above explains some great considerations when choosing enums vs union types
 ```ts
@@ -334,7 +334,7 @@ will *not* flag any issues!
 
 We can test this quickly using the compiler in our terminal $ tsc --noImplicitAny 05-any-type.ts
 
-And then formally add to the `tsconfig.json` file inside the `compilerOptions` object. See docs (here)[https://www.typescriptlang.org/tsconfig/#noImplicitAny].
+And then formally add to the `tsconfig.json` file inside the `compilerOptions` object. See docs [here](https://www.typescriptlang.org/tsconfig/#noImplicitAny).
 
 Key takeaways:
 - Avoid using `any` in your program period
