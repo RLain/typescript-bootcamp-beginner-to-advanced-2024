@@ -10,5 +10,8 @@ let courseId : number | null = 1000
 
 courseId = null
 
+let courseId2 : number | null = 1000
+
+courseId2 = null
 
 

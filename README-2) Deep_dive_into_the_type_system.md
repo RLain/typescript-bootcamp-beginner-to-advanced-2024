@@ -365,6 +365,52 @@ let courseId : number | null = null // Union type - more common reality
 
 ## Non null assertion operator
 
+📁Related files:
+/fundamentals/07-non-null-assertion-operator.ts
+
+This operator is denoted by an ! after the key name e.g. courseId!
+
+The following is telling the compiler that courseId won't be null, otherwise without this ! and if --strictNullChecks is enabled
+error TS18047: 'courseId' is possibly 'null' will throw. 
+
+```ts
+let courseId: number | null
+
+courseId!.toString()
+```
+
+⚠️ *Important*: This will _only_ address _compilation_ requirements and not prevent issues at runtime. For context, adding the
+non null assertion operator to the above allows the file to compile, however if we run the .js file using Node, we get an error ->
+TypeError: Cannot read properties of undefined (reading 'toString'). This is because courseId is undefined and has not yet been initialised
+....so the compiler operator doesn't actually solve the underlying runtime issue, it _bypasses_ the compiler check. 
+
+Only use this operator sparingly on a systematic basis. If you find yourself using often then your declarations of your types
+are likely incorrect. You should only use when you have more information than the compiler.
+
+## Strict null checks
+
+📁Related files:
+/fundamentals/06-union-types.ts _(yes this is the right file! We used an old one)_
+
+All types by default are nullable, this is to enable backwards compatiability to older versions of Typescript. 
+
+Note that the following type and declarations will not throw any compilation errors!
+
+```ts
+let courseId2: number = 1000;
+
+courseId2 = null //This is allowed!
+courseId2 = undefined //This is allowed!
+```
+
+Unless....we enable `strictNullChecks` when compiling. This now enforces the | null declaration
+
+```ts
+let courseId2: number | null = 1000; // | null is required to compile
+
+courseId2 = null
+courseId2 = undefined
+```
 
 Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/33047684#questions
 
