@@ -412,6 +412,186 @@ courseId2 = null
 courseId2 = undefined
 ```
 
-Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/33047684#questions
+## Literal types
+
+If you assign a constant with an initial value, the type _becomes_ the value.
+
+This is different to `let` which has a type inference ergo
+
+```ts
+let title = "Typescript Bootcamp" // title: string
+
+let lessonCount = 10 // lessonsCount: number
+```
+
+Whereas with a defined constant, the type becomes the literal value...
+```ts
+const title = "Typescript Bootcamp"; // type = "Typescript Bootcamp"
+
+const lessonCount = 10 // type = 10
+```
+
+We can combine union types with a `let` variable to inform the compiler of the expected values ergo
+
+```ts
+let pageSize: 10 | 15 | 20 = 10
+
+pageSize = 11 // TS2322: Type 11 is not assignable to type 10 | 15 | 20
+```
+
+## Type alias
+
+When using union types to define the allowed types for a variable, we don't want to have to potentially repeat multiple
+times in the codebase in different places. We can rather create a `type alias`.
+
+```ts
+type pageSizes = 10 | 15 | 20
+
+let pageSize: pageSizes
+pageSize = 10
+```
+
+The most common type alias is using an `Interface`
+
+
+## Defining custom object types
+
+📁Related files:
+/fundamentals/09-interfaces.ts
+
+An interface allows us to define the data structure for a variable.
+
+```ts
+interface Course {
+    title: string,
+    subtitle: string,
+    lessonsCount?: number, // ? makes this optional
+}
+
+const course: Course = {
+    title: "Typescript course",
+    subtitle: "Learn the fundamentals",
+    lessonsCount: 10
+}
+```
+
+By default, all properties can be written too.
+
+```ts
+interface Course {
+    title: string,
+    subtitle: string,
+    lessonsCount?: number,
+}
+
+const course: Course = {
+    title: "Typescript course",
+    subtitle: "Learn the fundamentals",
+    lessonsCount: 10
+}
+
+course.title = "Hello world" // This is allowed
+```
+
+If we want a property to be read only we can simply add this declaration:
+
+```ts
+interface Course {
+    readonly title: string,
+    subtitle: string,
+    lessonsCount?: number, // ? makes this optional
+}
+
+const course: Course = {
+    title: "Typescript course",
+    subtitle: "Learn the fundamentals",
+    lessonsCount: 10
+}
+
+course.title = "Hello world" // No longer allowed 'Attempt to assign to const or readonly variable'
+```
+
+## Type alias vs interfaces
+
+_Both of these_ allow us to define a custom object type:
+
+```ts
+type Course = { // also allows readonly and optional properties
+    title: string,
+    subtitle: string,
+    lessonCount: number
+}
+
+interface Course {
+    title: string,
+    subtitle: string,
+    lessonsCount: number, 
+}
+```
+
+Realities:
+- You can use them interchangeably. 
+- Typescript themselves recommends `using Interfaces to define custom objects`
+- `Type alias is generally best for Union types`
+- There is also a practical difference, Interfaces can be extended, Type aliases cannot
+
+```ts
+interface AdvancedCourse extends Course {
+    mentor: string
+}
+
+type AdvancedCourse extends Course {
+    //This is not allowed....TS2304: Cannot find name extends
+}
+```
+
+## Type assertions
+
+📁Related files:
+/fundamentals/10-type-assertion.ts
+
+In the rare situation where we know more about the value than the compiler, we can use Type assertions.
+
+This is done using the `as` keyword, and overrides the inferred type. This means we can access the correct
+values from the type.
+
+```ts
+// The following infers to type of HTMLElement as this is the only information it knows
+const input = document.getElementById("input-field")
+
+input.value //TS2339: Property value does not exist on type HTMLElement
+
+// This is a type assertion
+const input2 = document.getElementById("input-field") as HTMLInputElement
+
+input2.value //Whereas this is known
+```
+
+Type assertions are very valuable when we know more than the compiler, however `we should avoid over using them`.
+Most of the time the compilers infer correctly. 
+
+As example of when this is commonly used is when querying an element from a REST API and defining the json response properly.
+
+The following is an older syntax and called 'casting':
+```ts
+// This is an example of casting - this is an older syntax as using the 'as' keyword is more modern/recommended
+const input3 = <HTMLInputElement> document.getElementById("input-field")
+
+input3.value //Whereas this is known
+```
+
+There is also the following defensive mechanism:
+```ts
+//Typescript also has a defensive mechanism when it has an expectation of what _should_ be allowed:
+// TS2352: Conversion of type HTMLElement to type string may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to unknown first.
+const input4 = document.getElementById("input-field") as string
+
+input4.value //Won't work
+
+//To override this defense mechanism (this would be extremely rare! Question if you are using....)
+const input5 = (document.getElementById("input-field") as any) as string
+```
+
+Resume: 
 
 
