@@ -592,6 +592,3 @@ input4.value //Won't work
 const input5 = (document.getElementById("input-field") as any) as string
 ```
 
-Resume: 
-
-
