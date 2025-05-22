@@ -591,4 +591,3 @@ input4.value //Won't work
 //To override this defense mechanism (this would be extremely rare! Question if you are using....)
 const input5 = (document.getElementById("input-field") as any) as string
 ```
-
