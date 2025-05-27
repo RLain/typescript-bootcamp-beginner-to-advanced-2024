@@ -179,4 +179,89 @@ would not be quick if multiple nestings/deeper nestings!)
 Vasco recommends using the [npm package clone-deep](https://www.npmjs.com/package/clone-deep).
 
 
-Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/32763372#questions
+## Typescript Object Destructuring
+
+📁Related files:
+/fundamentals/17-object-destructuring.ts
+
+```ts
+function printCourse3(course: Course) {
+    const { title, subtitle, lessonsCount } = course //This is destructuring
+
+    console.log(`3- Title: ${title} Subtitle: ${subtitle}, LessonsCount: ${lessonsCount}`)
+}
+
+function printCourse4(course: Course) {
+    const { title, ...rest } = course //This is using the spread operator (remember rest can be named anything)
+
+    console.log(`4- Title: ${title} Subtitle: ${rest.subtitle}, LessonsCount: ${rest.lessonsCount}`)
+}
+```
+
+## Typescript Array Spread & Destructuring Operators
+
+📁Related files:
+/fundamentals/18-array-spread-destructuring.ts
+
+Here is an example of using the spread operator:
+```ts
+const numbers = [1, 2, 3]
+
+const moreNumbers = [...numbers, 4, 5, 6]
+
+console.log(moreNumbers) // Returns [ 1, 2, 3, 4, 5, 6 ]
+```
+
+This is an example of destructuring:
+```ts
+// Destructuring
+const [ first, second, ...remainder] =  moreNumbers
+
+console.log('Numbers', first, second)
+console.log('Remainder', remainder)
+
+// Numbers 1 2
+// Remainder [ 3, 4, 5, 6 ]
+```
+
+## Typescript Rest Arguments/Parameters
+
+📁Related files:
+/fundamentals/19-rest-arguments.ts
+
+
+Vasco starts this lecture by explaining that we have a function that we want to be able to pass in multiple courses too. 
+This naturally led to the following being built (note to future self, I was typing this intuitively before he did which is
+interesting from a way-embedded-into-brain realisation):
+```ts
+function printCourses(message: string, courses: Course[]) {
+    console.log(message)
+
+    for(let course of courses) {
+        console.log(course.title)
+    }
+}
+
+printCourses("Welcome to the Angular University", [course1, course2])
+```
+
+But there is a nicer way to write this leveraging off Typescript Rest Arguements. This makes the syntax a little bit more readable
+and user friendly, and allows us to pass in an undetermined amount of inputs e.g. course1 -> courseN.
+
+```ts
+// Simply adding the spread operator converts courses into a rest argument
+function printCourses(message: string, ...courses: Course[]) {
+    console.log(message)
+
+    for(let course of courses) {
+        console.log(course.title)
+    }
+}
+
+printCourses("Welcome to the Angular University", course1, course2) //Note we no longer pass into an array here.
+```
+
+## Debugging Typescript in the browser
+
+
+Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/32981850#questions
