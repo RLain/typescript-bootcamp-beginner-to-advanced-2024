@@ -229,7 +229,6 @@ console.log('Remainder', remainder)
 📁Related files:
 /fundamentals/19-rest-arguments.ts
 
-
 Vasco starts this lecture by explaining that we have a function that we want to be able to pass in multiple courses too. 
 This naturally led to the following being built (note to future self, I was typing this intuitively before he did which is
 interesting from a way-embedded-into-brain realisation):
@@ -262,6 +261,94 @@ printCourses("Welcome to the Angular University", course1, course2) //Note we no
 ```
 
 ## Debugging Typescript in the browser
+
+📁Related files:
+/fundamentals/20-debugging-typescript.ts
+
+Typescript can be run in two different environments:
+a) In the browser
+b) In a Node backend
+Essentially anywhere with a Javascript runtime environment.
+
+First we are going to debug a plain Javascript program. We do this via the index.html file and using the debugger syntax.
+We run this page using the lite server using 'npm run start' ("start": "lite-server").
+
+```ts
+const courseName = "Typescript Bootcamp"
+
+debugger; //Breakpoint
+
+if(courseName){
+    const subtitle = "Learn the language"
+
+    printCourseName(courseName)
+}
+
+function printCourseName(courseName: string) {
+    debugger; //Breakpoint
+
+    console.log('The course name is ' + courseName.toUpperCase())
+}
+```
+
+Note that debugger _only_ works when Dev Tools are open on the browser. 
+
+If we want to debug the actual Typescript file using the browser we use the normal tsc command
+however add the --sourceMap reference e.g. `$ tsc --sourceMap 20-debugging-typescript.ts`
+
+Once compiled, this creates both the normal plain Javascript file _and_ a .js.map file. We can now run our server
+and when Dev Tools is opened on the browser, we can see both the .js and .ts file under Sources. With the added breakpoints
+we can see the code stepping through on the .ts file.
+
+## Debugging Typescript in a Node environment
+
+📁Related files:
+/fundamentals/20-debugging-typescript.ts
+
+To debug a Typescript file in a Node envirnoment, again we first use the tsc --sourceMap command. Then when running node, we must 
+add the --inspect flag e.g. `$ node --inspect 20-debugging-typescript.js`. This then immediately spins up and executes the program.
+
+To see the debugger in action, we need to use the --inspect-brk flag `$ node --inspect-brk 20-debugging-typescript.js`. This starts the program then stops
+and allows us to attach a debugger. We can then step through the code, the same as on the browser.
+
+TLDR:
+- Use --inspect when you don't need to pause on startup, but want the option to debug or profile later during execution.
+- Use --inspect-brk when you want to debug startup code, inspect environment setup, or step through from the very first line.
+
+## Typescript Shorthand Object Creation Notation
+
+This is the name used for when you can just define the key.
+
+📁Related files:
+/fundamentals/21-shorthand-object-creation-notation.ts
+
+```ts
+interface Course {
+    title: string;
+    subtitle: string;
+    lessonsCount: number;
+}
+
+const courseTitle = "Typescript Bootcamp",
+    courseSubtitle = "Learn the language",
+    lessonsCount = 20
+
+const course: Course = {
+    title: courseTitle,
+    subtitle: courseSubtitle,
+    lessonsCount //This is an example of shorthand notation. We don't need a key:value pair definition and can simply state the key.
+}
+
+// We can simplify further ...
+const title = "Typescript Bootcamp",
+    subtitle = "Learn the language"
+
+const course2: Course = {
+    title, //This is an example of shorthand notation.
+    subtitle, //This is an example of shorthand notation.
+    lessonsCount //This is an example of shorthand notation.
+}
+```
 
 
 Resume: https://www.udemy.com/course/complete-typescript-2-course/learn/lecture/32981850#questions
