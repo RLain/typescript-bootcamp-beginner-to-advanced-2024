@@ -1,10 +1,10 @@
 interface Course {
-    title:string;
-    subtitle:string;
-    lessonsCount:number;
+    title: string;
+    subtitle: string;
+    lessonsCount: number;
 }
 
-function createCourse(title:string, subtitle:string, lessonsCount:number) {
+function createCourse(title: string, subtitle: string, lessonsCount: number) {
     console.log(`Creating a course with Title: ${title}, Subtitle: ${subtitle} and LessonsCount: ${lessonsCount}`);
 
     return {
@@ -19,16 +19,25 @@ console.log('typeof createCourse:');
 console.log(typeof createCourse);
 
 
-type CreateCourse = (title:string, subtitle:string, lessonsCount:number) => Course;
+type CreateCourse = (title: string, subtitle: string, lessonsCount: number) => Course;
 
-const createCourse2: CreateCourse = (title:string, subtitle:string, lessonsCount:number) => {
+type OnCourseCreated = (course: Course) => void;
+
+const createCourse2 = (title: string,
+                       subtitle: string,
+                       lessonsCount: number,
+                       callback: OnCourseCreated) => {
     console.log(`Creating a course with Title: ${title}, Subtitle: ${subtitle} and LessonsCount: ${lessonsCount}`);
 
-    return {
+    const course = {
         title,
         subtitle,
         lessonsCount
     }
+
+    callback(course)
+
+    return course
 }
 console.log('typeof createCourse2:');
 console.log(typeof createCourse2);

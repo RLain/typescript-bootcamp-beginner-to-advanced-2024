@@ -88,10 +88,75 @@ can be passed around in the code which is useful for callbacks which will be cov
 📁Related files:
 /fundamentals/22-introduction-to-functions.ts _(yes still using the same file as previous lecture!)_
 
+Remember that in Typescript nearly everything has a type associated to it. Every function is a value that can
+be assigned to a variable and passed around to other functions as an input parameter.
+
 ```ts
-// Add the type of 'Function' here is redundant and not particularly helpful to add.
+// 1) Add the type of 'Function' here is redundant and not particularly helpful to add.
+// It can take any argument of any type and any value of any type, so not very Type safe...
 const createCourse2: Function = (title:string, subtitle:string, lessonsCount:number) => {
     console.log(`Creating a course with Title: ${title}, Subtitle: ${subtitle} and LessonsCount: ${lessonsCount}`);
+    
+// 2) We rather create a function type:    
+type CreateCourse = (title:string, subtitle:string, lessonsCount:number) => Course;
+// And define as the return type of the function
+const createCourse2: CreateCourse = (title:string, subtitle:string, lessonsCount:number) => {
+    console.log(`Creating a course with Title: ${title}, Subtitle: ${subtitle} and LessonsCount: ${lessonsCount}`);
+
+    return {
+        title,
+        subtitle,
+        lessonsCount
+    }
+}
 ```
+
+This defined type provides the usual type safety if trying to pass in a value of the wrong type e.g. title here:
+```ts
+const createCourse2: CreateCourse = (title:number, subtitle:string, lessonsCount:number) => {
+    //...etc
+}
+```
+Or if you don't include an expected input parameter e.g.
+```ts
+type CreateCourse = (title:string, subtitle:string, lessonsCount:number) => Course;
+
+const createCourse2: CreateCourse = (title:string, subtitle:string, lessonsCount:number) => {
+    console.log(`Creating a course with Title: ${title}, Subtitle: ${subtitle} and LessonsCount: ${lessonsCount}`);
+
+    return {
+        title,
+        subtitle,
+        // lessonsCount will trigger TS2322: Type is not assignable to type CreateCourse
+    }
+}
+```
+
+We can also define Function types for callbacks, which can be very useful for making
+async programs type safe.
+
+```ts
+type OnCourseCreated = (course: Course) => void;
+
+const createCourse2 = (title: string,
+                       subtitle: string,
+                       lessonsCount: number,
+                       // See how the type is assigned here
+                       callback: OnCourseCreated) => {
+    console.log(`Creating a course with Title: ${title}, Subtitle: ${subtitle} and LessonsCount: ${lessonsCount}`);
+
+    const course = {
+        title,
+        subtitle,
+        lessonsCount
+    }
+
+    callback(course) // This then does type checking here.
+
+    return course
+}
+```
+
+
 
 ➡️Note to self, redo Section 5 Lecture 46 - not quite landing. Need to understand callbacks better
