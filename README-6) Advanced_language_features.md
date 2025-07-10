@@ -163,3 +163,125 @@ if(isCourseBoolean(course)) {
 }
 ```
 
+## Understanding the never type
+
+📁Related files:
+/fundamentals/26-type-never.ts
+
+The `never` type is one of the more strange types in this language.
+
+You cannot assign anything to a variable typed as 'never'
+```ts
+let neverValue: never = 1 //TS2322: Type number is not assignable to type never
+let neverValue2: never = "string" //TS2322: Type string is not assignable to type never
+let neverValue3: never = true //TS2322: Type boolean is not assignable to type never
+let neverValue4: never = [] //..etc
+let neverValue5: never = {}
+
+let anyValue: any
+let neverValue6: never = anyValue
+let neverValue7: never = null
+let neverValue8: never = undefined
+```
+
+The `never` type is meant to be used by the inference system when it determines that a certain situation is *impossible* and can never happen.
+
+```ts
+type CourseStatus = "draft" | "published" // Only two values
+
+let courseStatus: CourseStatus = "draft"
+
+if(courseStatus === "draft") {
+    console.log("draft")
+} else if(courseStatus === "published") {
+    console.log("published")
+} else {
+    const value = courseStatus // Inferred type becomes _never_
+    // Code in here will never be executed and never be reached
+}
+```
+
+The following shows an example of how using `never` in defensive programming can be helpful to identify when things are going ary:
+
+```ts
+type CourseStatus = "draft" | "published"
+
+let courseStatus: CourseStatus = "draft"
+
+if(courseStatus === "draft") {
+    console.log("draft")
+} else if(courseStatus === "published") {
+    console.log("published")
+} else {
+    unexpectedError(courseStatus)
+}
+function unexpectedError(value: never) {
+    throw new Error(`Unexpected value ${value}`)
+}
+```
+
+If a dev then adds a new CourseStatus value, then a compilation error will render:
+
+TS2345: Argument of type string is not assignable to parameter of type never
+
+Note: Writing a function such as unexpectedError is called [Exhaustiveness checking](https://gibbok.github.io/typescript-book/book/exhaustiveness-checking/)
+
+
+## Typescript intersection types
+
+📁Related files:
+/fundamentals/27-intersection-types.ts
+
+An `intersection type` is the opposite of a `union type` and is a *combination* of types.
+
+```ts
+interface HasId {
+    id: string
+}
+
+interface HasTitle {
+    title: string
+    description: string
+}
+
+type Course = HasId & HasTitle // Combination an intersection type
+
+const course: Course = {
+    id: "123",
+    title: "Typescript",
+    description: "Learn the basics"
+}
+```
+
+✅ When to Use Intersection Types (&)
+Use them when:
+
+- You want to combine multiple types (including non-interfaces).
+- You're working with union types, primitive types, or type aliases.
+- You want maximum flexibility (e.g. with utility types or conditional types).
+- You're composing things inline or dynamically.
+
+```ts
+type Timestamped = { createdAt: Date }
+type User = { name: string }
+
+type TimestampedUser = Timestamped & User
+```
+
+✅ When to Use interface extends
+Use when:
+
+- You're building clear, structured, named object shapes (especially in OOP-style code).
+- You want to inherit a base structure and expand it.
+- You want to augment existing interfaces (like in a declaration file or a third-party lib).
+
+```ts
+interface User {
+  name: string;
+}
+
+interface Admin extends User {
+  role: "admin";
+}
+```
+
