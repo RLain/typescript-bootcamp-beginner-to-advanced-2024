@@ -1,0 +1,1 @@
+# Note to self - skipped this section to rather focus on the OOP bit whilst I am still doing Typescript daily
